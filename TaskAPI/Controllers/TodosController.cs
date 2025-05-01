@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TaskAPI.Services;
+using TaskAPI.Services.Todos;
 
 namespace TaskAPI.Controllers
 {
 
 
 
-    [Route("api/[controller]")]
+    [Route("api/todos")]
     [ApiController]
     public class TodosController : ControllerBase
     {
@@ -44,18 +44,28 @@ namespace TaskAPI.Controllers
         //    return Ok(todo);
         //}
         //WITH ID or without id this works
-        [HttpGet("{id?}")]
-        public IActionResult GetTodosAdvanced(int? id)
+        //[HttpGet("{id?}")]
+        //public IActionResult GetTodosAdvanced(int? id)
+        //{
+        //    var todos = _todoService.AllTodos();
+        //    if(id is null)
+        //    {
+        //        return Ok(todos);
+        //    }
+        //    todos = todos.Where(t => t.Id == id).ToList();
+        //    return Ok(todos);
+        //}
+        [HttpPost("{id}")]
+        public IActionResult GetTodo(int id)
         {
-            var todos = _todoService.AllTodos();
-            if(id is null)
-            {
-                return Ok(todos);
-            }
-            todos = todos.Where(t => t.Id == id).ToList();
-            return Ok(todos);
-        }
 
+            var todo = _todoService.GetTodo(id);
+            if (todo is null)
+            {
+                return NotFound();
+            }
+            return Ok(todo);
+        }
         
     }
 }

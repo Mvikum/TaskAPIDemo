@@ -14,6 +14,7 @@ namespace TaskAPI.DataAccess
     {
         //adding Todos table
         public DbSet<Todo> Todos { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         //connect to db
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,14 +38,46 @@ namespace TaskAPI.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Todo>().HasData(new Todo
+            modelBuilder.Entity<Author>().HasData(new Author[]
             {
-                Id = 1,
-                Title = "Get books - DB",
-                Description = "Get some text books",
-                CreatedDate = DateTime.Now,
-                Due = DateTime.Now.AddDays(5),
-                Status = TodoStatus.New
+                new Author { Id = 1,FullName="Sucharitha Gamlath" },
+                new Author { Id = 2,FullName="Wasana Bandara" },
+                new Author { Id = 3,FullName="Mahagama Sekara" },
+                new Author { Id = 4,FullName="Martin Wickramasinghe" }
+            }
+            );
+
+            modelBuilder.Entity<Todo>().HasData(new Todo[]
+            {   new Todo
+                    {
+                    Id = 1,
+                    Title = "Get books - DB",
+                    Description = "Get some text books",
+                    CreatedDate = DateTime.Now,
+                    Due = DateTime.Now.AddDays(5),
+                    Status = TodoStatus.New,
+                    AuthorId = 1
+                    },
+                    new Todo
+                    {
+                    Id = 2,
+                    Title = "Buy vegetables - DB",
+                    Description = "Buy vegetables for the week ",
+                    CreatedDate = DateTime.Now,
+                    Due = DateTime.Now.AddDays(5),
+                    Status = TodoStatus.New,
+                    AuthorId = 1
+                    },
+                    new Todo
+                    {
+                    Id = 3,
+                    Title = "Watering to plants - DB",
+                    Description = "Water to plants in the evening",
+                    CreatedDate = DateTime.Now,
+                    Due = DateTime.Now.AddDays(5),
+                    Status = TodoStatus.New,
+                    AuthorId = 2
+                    }
             });
         }
 
