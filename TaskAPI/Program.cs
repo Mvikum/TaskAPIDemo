@@ -1,3 +1,5 @@
+using TaskAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +9,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Dependency Injection
+//AddSingleton();  Only one instance for application
+//AddScoped(); New Object is creaed per request
+//AddTransient(); Alyas a new object is presented
+builder.Services.AddScoped<ITodoRepository, TodoSqlServerService>();
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
